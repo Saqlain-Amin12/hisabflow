@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const i=require('fs').readFileSync(0,'utf8');const d=JSON.parse(i);const f=d.tool_input&&(d.tool_input.file_path||d.tool_response&&d.tool_response.filePath);if(f&&/apps[\\\\/]web[\\\\/]/.test(f)&&!/CLAUDE\\.md/.test(f)){console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PostToolUse',additionalContext:'CLAUDE.md update reminder: you just edited a source file. If this change adds/removes a feature, changes a color/layout rule, adds a new component or route, or changes a design decision documented in CLAUDE.md, update CLAUDE.md now before finishing.'}}));}\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
